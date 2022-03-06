@@ -1,37 +1,72 @@
 // Write your code here!
-const loginfield = document.getElementById("logged-user")
-const table = document.getElementById("info-table")
 const users = ["UserA", "UserB", "UserC", "UserD"]
 var user = ''
+const table = document.getElementById("info-table")
 var statuschk = 0
-
+const loginField = document.getElementById("logged-user")
 const database = [
-    { id: 1, name: "Book1", author: "Author1", lender: "UserC", borrower: "UserB", action: "" },
-    { id: 2, name: "Book2", author: "Author2", lender: "UserC", borrower: "", action: "" },
-    { id: 3, name: "Book3", author: "Author3", lender: "UserD", borrower: "UserC", action: "" },
-    { id: 4, name: "Book4", author: "Author4", lender: "UserA", borrower: "", action: "" },
-    { id: 5, name: "Book5", author: "Author5", lender: "UserA", borrower: "", action: "" },
-    { id: 6, name: "Book6", author: "Author6", lender: "UserB", borrower: "UserA", action: "" }
+    {   id: 1,
+        name: "Book1",
+        author: "Author1",
+        lender: "UserC",
+        borrower: "UserB", 
+        action: "" 
+    },
+    {   id: 2, 
+        name: "Book2",
+        author: "Author2", 
+        lender: "UserC", 
+        borrower: "", 
+        action: "" 
+    },
+    {   id: 3, 
+        name: "Book3", 
+        author: "Author3", 
+        lender: "UserD", 
+        borrower: "UserC", 
+        action: "" 
+    },
+    {   id: 4, 
+        name: "Book4", 
+        author: "Author4", 
+        lender: "UserA", 
+        borrower: "", 
+        action: "" 
+    },
+    {   id: 5, 
+        name: "Book5", 
+        author: "Author5", 
+        lender: "UserA", 
+        borrower: "", 
+        action: "" 
+    },
+    {   id: 6, 
+        name: "Book6", 
+        author: "Author6", 
+        lender: "UserB", 
+        borrower: "UserA", 
+        action: "" 
+    }
 ]
 for (var i = 0; i < database.length; i++) {
     var row = table.insertRow()
     var id = row.insertCell(0)
-    var namenew = row.insertCell(1)
+    var newName = row.insertCell(1)
     var author = row.insertCell(2)
     var lender = row.insertCell(3)
     var borrower = row.insertCell(4)
     var action = row.insertCell(5)
     id.innerHTML = database[i].id
-    namenew.innerHTML = database[i].name
+    newName.innerHTML = database[i].name
     author.innerHTML = database[i].author
     lender.innerHTML = database[i].lender
     borrower.innerHTML = database[i].borrower
     action.innerHTML = ""
 }
 function changeLoggedInUser() {
-    const username = loginfield.value
+    const userName = loginField.value
     let message = document.getElementById("logged-in-user-name")
-    if (users.includes(username)) {
+    if (users.includes(userName)) {
         if (statuschk === 1) {
             for (let i = 1; i < table.rows.length - 1; i++) {
                 row = table.rows[i]
@@ -39,11 +74,11 @@ function changeLoggedInUser() {
             }
             table.deleteRow(table.rows.length - 1)
         }
-        message.innerHTML = "Logged in user: " + username;
-        user = username
+        message.innerHTML = "Logged in user: " + userName;
+        user = userName
         statuschk = 1
         addrow(user)
-    } else if (!users.includes(username) && username !== "") {
+    } else if (!users.includes(userName) && userName !== "") {
         message.innerHTML = ""
         statuschk = 0
         for (let i = 1; i < table.rows.length - 1; i++) {
@@ -51,7 +86,7 @@ function changeLoggedInUser() {
             row.cells[5].innerHTML = ""
         }
         table.deleteRow(table.rows.length - 1)
-    } else if (username = "") {
+    } else if (userName = "") {
         //foobar
     }
 }
