@@ -1,9 +1,11 @@
 // Write your code here!
 const users = ["UserA", "UserB", "UserC", "UserD"]
-var user = ''
+let user = ''
+//Extracting values from the table
 const table = document.getElementById("info-table")
-var statusCheck = 0
+let statusCheck = 0;
 const loginField = document.getElementById("logged-user")
+// All the present users
 const database = [
     {   id: 1,
         name: "Book1",
@@ -47,51 +49,53 @@ const database = [
         borrower: "UserA", 
         action: "" 
     }
-]
-for (var i = 0; i < database.length; i++) {
-    var row = table.insertRow()
-    var id = row.insertCell(0)
-    var newName = row.insertCell(1)
-    var author = row.insertCell(2)
-    var lender = row.insertCell(3)
-    var borrower = row.insertCell(4)
-    var action = row.insertCell(5)
-    id.innerHTML = database[i].id
-    newName.innerHTML = database[i].name
-    author.innerHTML = database[i].author
-    lender.innerHTML = database[i].lender
-    borrower.innerHTML = database[i].borrower
-    action.innerHTML = ""
+];
+// Extractions of the values
+for (let i = 0; i < database.length; i++) {
+    let row = table.insertRow();
+    let id = row.insertCell(0);
+    let newName = row.insertCell(1);
+    let author = row.insertCell(2);
+    let lender = row.insertCell(3);
+    let borrower = row.insertCell(4);
+    let action = row.insertCell(5);
+    id.innerHTML = database[i].id;
+    newName.innerHTML = database[i].name;
+    author.innerHTML = database[i].author;
+    lender.innerHTML = database[i].lender;
+    borrower.innerHTML = database[i].borrower;
+    action.innerHTML = "";
 }
+
 function changeLoggedInUser() {
-    const userName = loginField.value
-    let message = document.getElementById("logged-in-user-name")
+    const userName = loginField.value;
+    let message = document.getElementById("logged-in-user-name");
     if (users.includes(userName)) {
         if (statusCheck === 1) {
             for (let i = 1; i < table.rows.length - 1; i++) {
-                row = table.rows[i]
-                row.cells[5].innerHTML = ""
+                row = table.rows[i];
+                row.cells[5].innerHTML = "";
             }
-            table.deleteRow(table.rows.length - 1)
+            table.deleteRow(table.rows.length - 1);
         }
         message.innerHTML = "Logged in user: " + userName;
-        user = userName
-        statusCheck = 1
-        addrow(user)
+        user = userName;
+        statusCheck = 1;
+        addRow(user);
     } else if (!users.includes(userName) && userName !== "") {
-        message.innerHTML = ""
-        statusCheck = 0
+        message.innerHTML = "";
+        statusCheck = 0;
         for (let i = 1; i < table.rows.length - 1; i++) {
-            row = table.rows[i]
-            row.cells[5].innerHTML = ""
+            row = table.rows[i];
+            row.cells[5].innerHTML = "";
         }
-        table.deleteRow(table.rows.length - 1)
+        table.deleteRow(table.rows.length - 1);
     } else if (userName = "") {
         //foobar
     }
 }
 
-function addrow(user) {
+function addRow(user) {
     table.insertRow(database.length + 1).innerHTML = `<tr>
     <td>
     </td>
@@ -109,41 +113,47 @@ function addrow(user) {
         <button type="button" onclick="insertnew(user)">Add</button>
     </td>
     </tr>`
-    loggedin()
+    loggedIn()
 }
 
-function insertnew(userlogged) {
-    var titlename = document.getElementById("titlenew");
-    var authorname = document.getElementById("authornew");
+function insertnew(userLogged) {
+    //Checked the corner test cases that is checking the proper values has been entered or not
+    let titleName = document.getElementById("titlenew").value === "" ? alert("Enter some values in the Title field") : document.getElementById("titlenew");
+    let authorName = document.getElementById("authornew").value === "" ? alert("Enter some values in the Author field") : document.getElementById("authornew");
     database.push({
         id: database.length,
-        name: titlename.value,
-        author: authorname.value,
-        lender: userlogged,
+        name: titleName.value,
+        author: authorName.value,
+        lender: userLogged,
         borrower: "",
         action: ""
     })
-    var row = table.insertRow(database.length)
+    let row = table.insertRow(database.length);
 
-    var id = row.insertCell(0)
-    id.innerHTML = database.length
+    let id = row.insertCell(0);
+    id.innerHTML = database.length;
 
-    var namenew = row.insertCell(1)
-    namenew.innerHTML = titlename.value
+    let namenew = row.insertCell(1);
+    namenew.innerHTML = titleName.value;
 
-    var author = row.insertCell(2)
-    author.innerHTML = authorname.value
+    let author = row.insertCell(2);
+    author.innerHTML = authorName.value;
 
-    var lender = row.insertCell(3)
-    lender.innerHTML = userlogged
+    let lender = row.insertCell(3)
+    lender.innerHTML = userLogged
 
-    var borrower = row.insertCell(4)
+    let borrower = row.insertCell(4)
     borrower.innerHTML = ""
 
-    var action = row.insertCell(5)
+    let action = row.insertCell(5)
+    
+    // Cleared the box for the next input
+    titleName.value = null;
+    authorName.value = null;
 }
 
-function loggedin() {
+// Logging in 
+function loggedIn() {
     for (let i = 1; i < table.rows.length; i++) {
         let row = table.rows[i]
         if (database[i - 1].lender !== user && database[i - 1].borrower === "") {
@@ -154,16 +164,18 @@ function loggedin() {
     }
 }
 
-function borrow(rowno) {
-    let row = table.rows[rowno]
-    row.cells[5].innerHTML = `<button onclick="returning(${rowno})">Return</button>`
-    row.cells[4].innerHTML = user
-    database[rowno - 1].borrower = user
+// browwing 
+function borrow(rowNo) {
+    let row = table.rows[rowNo];
+    row.cells[5].innerHTML = `<button onclick="returning(${rowNo})">Return</button>`
+    row.cells[4].innerHTML = user;
+    database[rowNo - 1].borrower = user;
 }
 
-function returning(rowno) {
-    let row = table.rows[rowno]
-    row.cells[5].innerHTML = `<button onclick="borrow(${rowno})">Borrow</button>`
+//returning the values
+function returning(rowNo) {
+    let row = table.rows[rowNo];
+    row.cells[5].innerHTML = `<button onclick="borrow(${rowNo})">Borrow</button>`
     row.cells[4].innerHTML = ""
-    database[rowno - 1].borrower = ""
+    database[rowNo - 1].borrower = ""
 }

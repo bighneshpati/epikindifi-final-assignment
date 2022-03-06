@@ -16,7 +16,7 @@ html,body {
 
 .content-section {
     width: 100%;
-    margin: 20px auto;
+    margin: 40px auto;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -27,7 +27,7 @@ html,body {
 .book-table {
     width: 800px;
     height: 800px;
-    border: 1px solid black;
+    border: 1px solid rgb(20, 20, 20);
     border-collapse: collapse;
 }
 
