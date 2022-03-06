@@ -2,7 +2,7 @@
 const users = ["UserA", "UserB", "UserC", "UserD"]
 var user = ''
 const table = document.getElementById("info-table")
-var statuschk = 0
+var statusCheck = 0
 const loginField = document.getElementById("logged-user")
 const database = [
     {   id: 1,
@@ -67,7 +67,7 @@ function changeLoggedInUser() {
     const userName = loginField.value
     let message = document.getElementById("logged-in-user-name")
     if (users.includes(userName)) {
-        if (statuschk === 1) {
+        if (statusCheck === 1) {
             for (let i = 1; i < table.rows.length - 1; i++) {
                 row = table.rows[i]
                 row.cells[5].innerHTML = ""
@@ -76,11 +76,11 @@ function changeLoggedInUser() {
         }
         message.innerHTML = "Logged in user: " + userName;
         user = userName
-        statuschk = 1
+        statusCheck = 1
         addrow(user)
     } else if (!users.includes(userName) && userName !== "") {
         message.innerHTML = ""
-        statuschk = 0
+        statusCheck = 0
         for (let i = 1; i < table.rows.length - 1; i++) {
             row = table.rows[i]
             row.cells[5].innerHTML = ""
@@ -93,12 +93,21 @@ function changeLoggedInUser() {
 
 function addrow(user) {
     table.insertRow(database.length + 1).innerHTML = `<tr>
+    <td>
+    </td>
+    <td>
+        <input type="text" id="titlenew" placeholder="Title" required></input>
+    </td>
+    <td>
+        <input type="text" id="authornew" placeholder="Author" required></input>
+    </td>
+    <td>
+        ${user}
+    </td>
     <td></td>
-    <td><input type="text" id="titlenew" placeholder="Title" required></input></td>
-    <td><input type="text" id="authornew" placeholder="Author" required></input></td>
-    <td>${user}</td>
-    <td></td>
-    <td><button type="button" onclick="insertnew(user)">Add</button></td>
+    <td>
+        <button type="button" onclick="insertnew(user)">Add</button>
+    </td>
     </tr>`
     loggedin()
 }
